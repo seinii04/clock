@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本時間時計</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .clock {
+      text-align: center;
+    }
+
+    .date {
+      font-size: clamp(20px, 5vw, 32px);
+      margin-bottom: 15px;
+    }
+
+    .time {
+      font-size: clamp(50px, 15vw, 120px);
+      font-weight: bold;
+      letter-spacing: 4px;
+    }
+
+    .timezone {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="clock">
+    <div id="date" class="date"></div>
+    <div id="time" class="time"></div>
+    <div class="timezone">日本標準時（JST）</div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+
+      // 日本時間（JST）で取得
+      const date = new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        weekday: "long"
+      }).format(now);
+
+      const time = new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).format(now);
+
+      document.getElementById("date").textContent = date;
+      document.getElementById("time").textContent = time;
+    }
+
+    // 最初に表示
+    updateClock();
+
+    // 1秒ごとに更新
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html>
